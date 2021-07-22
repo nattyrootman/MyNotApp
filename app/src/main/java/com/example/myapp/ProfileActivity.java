@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -40,7 +41,7 @@ public class ProfileActivity extends AppCompatActivity {
     ProgressBar progressBar;
 
     final static int Codes=100;
-
+      Button btn;
     String userName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,7 @@ public class ProfileActivity extends AppCompatActivity {
         inputEditText=findViewById(R.id.textInputLayout);
         imageView=findViewById(R.id.imageView);
         progressBar=findViewById(R.id.progressBar);
+        btn=findViewById(R.id.upload);
 
 
        FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
@@ -61,7 +63,8 @@ public class ProfileActivity extends AppCompatActivity {
             inputEditText.setSelection(user.getDisplayName().length());
         }
 
-        if (user!=null){
+        if (user.getPhotoUrl()!=null){
+
 
             Glide.with(this).load(user.getPhotoUrl()).into(imageView);
 
@@ -71,6 +74,11 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void Upload(View view) {
+
+
+        progressBar.setVisibility(View.VISIBLE);
+
+        btn.setVisibility(View.GONE);
 
         userName=inputEditText.getText().toString();
 
@@ -85,6 +93,9 @@ public class ProfileActivity extends AppCompatActivity {
                     @Override
                     public void onComplete( Task<Void> task) {
                         if (task.isSuccessful()){
+
+                            progressBar.setVisibility(View.GONE);
+                            btn.setVisibility(View.VISIBLE);
                             Toast.makeText(getApplicationContext(),"is profile updated",Toast.LENGTH_LONG).show();
 
                         }

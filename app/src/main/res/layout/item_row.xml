@@ -8,6 +8,7 @@
     app:cardMaxElevation="12dp"
     app:cardPreventCornerOverlap="true"
     app:cardUseCompatPadding="true"
+    android:animationCache="true"
     android:backgroundTint="@color/browser_actions_divider_color">
 
 
